@@ -1,0 +1,103 @@
+{{!-- Citation for the following HBS file: --}}
+{{!-- Date: 05/30/2023 --}}
+{{!-- Adapted from: index.hbs --}}
+{{!-- Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app --}}
+
+<!-- index.hbs -->
+
+<body>
+{{!-- Create a table --}}
+<div class="table-container">
+<h2>Students</h1>
+<p>Students Information</p>
+<br>
+<table id="students-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, firstname, lastname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value="{{this.idStudent}}">
+            <td>{{this.idStudent}}</td>
+            <td>{{this.firstName}}</td>
+            <td>{{this.lastName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.dateOfBirth}}</td>
+            <td>{{this.year}}</td>
+            <td>
+                <button onclick="deleteStudent({{this.idStudent}})">Delete</button>
+                <button onclick="expandUpdateForm('{{this.idStudent}}', '{{this.firstName}}', '{{this.lastName}}', '{{this.email}}', '{{this.dateOfBirth}}', '{{this.year}}')">Update</button> <!-- Add an "Update" button and pass the row data as arguments --></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
+
+    
+<!-- /views/index.hbs -->
+
+{{!-- Form to add a record to the table  --}}
+<div class="form-container">
+<p>To add a new student, please enter their information below and click Submit!</p>
+<form id="add-student-form-ajax">
+    <label for="input-firstName">First Name: </label>
+    <input type="text" name="input-firstName" id="input-firstName">
+
+    <label for="input-lastName">Last Name: </label>
+    <input type="text" name="input-lastName" id="input-lastName">
+
+    <label for="input-email">Email: </label>
+    <input type="text" name="input-email" id="input-email">
+
+    <label for="input-dateOfBirth">dateOfBirth: </label>
+    <input type="text" name="input-dateOfBirth" id="input-dateOfBirth">
+
+    <label for="input-year">year: </label>
+    <input type="text" name="input-year" id="input-year">
+
+    <input type="submit">
+</form>
+
+    <!-- Update Student form -->
+        <form id="update-student-form-ajax">
+            <h3>Update Student</h3>
+            <input type="hidden" name="update-student-id" id="update-student-id">
+            <label for="update-firstName">First Name:</label>
+            <input type="text" name="update-firstName" id="update-firstName">
+
+            <label for="update-lastName">Last Name:</label>
+            <input type="text" name="update-lastName" id="update-lastName">
+
+            <label for="update-email">Email:</label>
+            <input type="text" name="update-email" id="update-email">
+
+            <label for="update-dateOfBirth">Date of Birth:</label>
+            <input type="text" name="update-dateOfBirth" id="update-dateOfBirth">
+
+            <label for="update-year">Year:</label>
+            <input type="text" name="update-year" id="update-year">
+
+           <!-- Update button -->
+    <input type="submit">
+        </form>
+</div>
+</body>
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/students/add_student.js"></script>
+<script src="./js/students/update_student.js"></script>
+<script src="./js/students/delete_student.js"></script>

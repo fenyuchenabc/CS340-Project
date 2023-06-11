@@ -1,0 +1,120 @@
+{{!-- Citation for the following HBS file: --}}
+{{!-- Date: 05/30/2023 --}}
+{{!-- Adapted from: index.hbs --}}
+{{!-- Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app --}}
+<!-- index.hbs -->
+
+{{!-- Create a table --}}
+<div class="table-container">
+<h2>Classrooms</h2>
+<p>classrooms Information</p>
+<br>
+<table id="classrooms-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, firstname, lastname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value="{{this.idClassroom}}">
+            <td>{{this.idClassroom}}</td>
+            <td>{{this.location}}</td>
+            <td>{{this.capacity}}</td>
+            <td>{{this.isLab}}</td>
+            <td><button onclick="deleteClassroom({{this.idClassroom}})">Delete</button>
+                <button onclick="expandUpdateForm('{{this.idClassroom}}', '{{this.location}}', '{{this.capacity}}', '{{this.isLab}}')">Update</button> <!-- Add an "Update" button and pass the row data as arguments --></td>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
+<!-- /views/index.hbs -->
+<div class="form-container">
+
+{{!-- Form to add a record to the table  --}}
+<p>To add a new classroom, please enter their information below and click Submit!</p>
+<form id="add-classroom-form-ajax">
+
+    <label for="input-idClassroom">idClassroom: </label>
+    <input type="text" name="input-idClassroom" id="input-idClassroom">
+     <label for="input-location">Location: </label>
+    <select name="input-location" id="input-location">
+    <option >Select Building</option>
+    <option value="ABuilding">Building A</option>
+    <option value="BBuilding">Building B</option>
+    <option value="CBuilding">Building C</option>
+    <option value="DBuilding">Building D</option>
+    <option value="EBuilding">Building E</option>
+    <option value="FBuilding">Building F</option>
+    <option value="ScienceBuilding">Science Building</option>
+    <option value="MainBuilding">Main Building</option>
+    </select>
+
+    <label for="input-capacity">Capacity: </label>
+    <input type="text" name="input-capacity" id="input-capacity">
+
+    <label for="input-isLab">isLab: </label>
+   <select name="input-isLab" id="input-isLab">
+        <option></option>
+        <option value= "ture">Yes</option>
+        <option value= "false">No</option>
+
+    </select>
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+
+<h2>Updating Classroom location</h2>
+<p>To update a classroom location, enter classroom id and select location in the drop-down menu</p>
+<form id="update-classroom-form-ajax">
+
+    <label for="update-idClassroom">idClassroom: </label>
+    <input type="text" name="update-idClassroom" id="update-idClassroom" disabled>
+
+    <label for="update-location">Location: </label>
+    <select name="update-location" id="update-location">
+        <option >Select Building</option>
+      <option value="ABuilding">Building A</option>
+        <option value="BBuilding">Building B</option>
+        <option value="CBuilding">Building C</option>
+      <option value="DBuilding">Building D</option>
+    <option value="EBuilding">Building E</option>
+    <option value="FBuilding">Building F</option>
+    <option value="ScienceBuilding">Science Building</option>
+    <option value="MainBuilding">Main Building</option>
+    </select>
+     <label for="update-capacity">Capacity: </label>
+    <input type="text" name="update-capacity" id="update-capacity">
+
+    <label for="update-isLab">isLab: </label>
+    <select name="update-isLab" id="update-isLab">
+        <option></option>
+        <option value= "ture">Yes</option>
+        <option value= "false">No</option>
+
+    </select>
+    <input type="submit">
+
+</form>
+</div>
+
+<script src="./js/classrooms/add_classrooms.js"></script>
+<script src="./js/classrooms/delete_classrooms.js"></script>
+<script src="./js/classrooms/update_classroom.js"></script>

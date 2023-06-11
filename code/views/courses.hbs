@@ -1,0 +1,162 @@
+{{!-- Citation for the following HBS file: --}}
+{{!-- Date: 05/30/2023 --}}
+{{!-- Adapted from: index.hbs --}}
+{{!-- Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app --}}
+<!-- index.hbs -->
+
+{{!-- Create a table --}}
+<div class="table-container">
+<h2>Courses</h2>
+<p>Courses Information</p>
+<br>
+<table id="courses-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, firstname, lastname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value="{{this.idCourse}}">
+            <td>{{this.idCourse}}</td>
+            <td>{{this.courseCode}}</td>
+            <td>{{this.startTime}}</td>
+            <td>{{this.endTime}}</td>
+            <td>{{this.daysOfWeek}}</td>
+            <td>{{this.idClassroom}}</td>
+            <td>{{this.idTeacher}}</td>
+            <td>
+                <button onclick="deleteCourse({{this.idCourses}})">Delete</button>
+                <button onclick="expandUpdateForm('{{this.idCourse}}', '{{this.courseCode}}', '{{this.startTime}}', '{{this.endTime}}', '{{this.daysOfWeek}}', '{{this.idClassroom}}', '{{this.idTeacher}}')">Update</button> <!-- Add an "Update" button and pass the row data as arguments --></td>
+
+            </td>
+            
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
+<!-- /views/index.hbs -->
+<div class="form-container">
+
+{{!-- Form to add a record to the table  --}}
+<p>To add a new course, please enter their information below and click Submit!</p>
+<form id="add-course-form-ajax">
+    <label for="input-courseCode">CourseCode: </label>
+    <input type="text" name="input-courseCode" id="input-courseCode">
+
+    <label for="input-startTime">startTime: </label>
+    <input type="text" name="input-startTime" id="input-startTime">
+
+    <label for="input-endTime">endTime: </label>
+    <input type="text" name="input-endTime" id="input-endTime">
+
+    <label for="input-daysOfWeek">daysOfWeek: </label>
+    <input type="text" name="input-daysOfWeek" id="input-daysOfWeek">
+
+    <label for="input-idClassroom">Classroom ID: </label>
+    <select name="input-idClassroom" id="input-idClassroom">
+         <option>select</option>
+    </select>
+
+    <label for="input-idTeacher">Teacher ID: </label>
+    <select name="input-idTeacher" id="input-idTeacher">
+        <option>select</option>
+    </select>
+
+    <input type="submit">
+</form>
+
+<!-- Update Course form -->
+        <form id="update-course-form-ajax">
+    <h3>Update Course</h3>
+    <input type="hidden" name="update-course-id" id="update-course-id">
+    <label for="update-courseCode">CourseCode: </label>
+    <input type="text" name="update-courseCode" id="update-courseCode">
+
+    <label for="update-startTime">startTime: </label>
+    <input type="text" name="update-startTime" id="update-startTime">
+
+    <label for="update-endTime">endTime: </label>
+    <input type="text" name="update-endTime" id="update-endTime">
+
+    <label for="update-daysOfWeek">daysOfWeek: </label>
+    <input type="text" name="update-daysOfWeek" id="update-daysOfWeek">
+
+    <label for="update-idClassroom">Classroom ID: </label>
+    <select name="update-idClassroom" id="update-idClassroom">
+        <option>select</option>
+    </select>
+
+    <label for="update-idTeacher">Teacher: </label>
+    <select name="update-idTeacher" id="update-idTeacher">
+        <option>select</option>
+    </select>
+
+    <input type="submit">
+</form>
+</div>
+    <script>
+        // Fetch teachers data from the API
+fetch('api/teachers')
+  .then(response => response.json())
+  .then(data => {
+    // Get the select element
+    const selectTeacher = document.getElementById('update-idTeacher');
+    const selectTeacher2 = document.getElementById('input-idTeacher');
+
+    // Loop through the teachers' data and create an option for each teacher
+    data.forEach(teacher => {
+      const option = document.createElement('option');
+      option.value = teacher.idTeacher;
+      option.textContent = `${teacher.idTeacher}`;
+      selectTeacher.appendChild(option);
+
+      const option2 = document.createElement('option');
+      option2.value = teacher.idTeacher;
+      option2.textContent = `${teacher.idTeacher}`;
+      selectTeacher2.appendChild(option2);
+    });
+  })
+  .catch(error => console.log(error));
+
+  fetch('api/classrooms')
+  .then(response => response.json())
+  .then(data => {
+    // Get the select element
+    const selectClassroom = document.getElementById('input-idClassroom');
+    const selectClassroom2 = document.getElementById('update-idClassroom');
+
+    // Loop through the teachers' data and create an option for each teacher
+    data.forEach(classroom => {
+      const option = document.createElement('option');
+      option.value = classroom.idClassroom;
+      option.textContent = `${classroom.idClassroom}`;
+      selectClassroom.appendChild(option);
+
+      const option2 = document.createElement('option');
+      option2.value = classroom.idClassroom;
+      option2.textContent = `${classroom.idClassroom}`;
+      selectClassroom2.appendChild(option2);
+    });
+  })
+  .catch(error => console.log(error));
+    </script>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/courses/add_course.js"></script>
+<script src="./js/courses/delete_course.js"></script>
+<script src="./js/courses/update_course.js"></script>

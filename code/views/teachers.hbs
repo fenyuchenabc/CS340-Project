@@ -1,0 +1,92 @@
+{{!-- Citation for the following HBS file: --}}
+{{!-- Date: 05/30/2023 --}}
+{{!-- Adapted from: index.hbs --}}
+{{!-- Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app --}}
+
+<!-- index.hbs -->
+
+{{!-- Create a table --}}
+<div class="table-container">
+<h2>Teachers</h2>
+<p>Teachers Information</p>
+<br>
+<table id="teachers-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, firstname, lastname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value="{{this.idTeacher}}">
+            <td>{{this.idTeacher}}</td>
+            <td>{{this.firstName}}</td>
+            <td>{{this.lastName}}</td>
+            <td>{{this.phoneNumber}}</td>
+            <td>{{this.email}}</td>
+            <td>
+                <button onclick="deleteTeacher({{this.idTeacher}})">Delete</button>
+                <button onclick="expandUpdateForm('{{this.idTeacher}}', '{{this.firstName}}', '{{this.lastName}}', '{{this.phoneNumber}}', '{{this.email}}')">Update</button> <!-- Add an "Update" button and pass the row data as arguments --></td>
+
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
+<!-- /views/index.hbs -->
+
+{{!-- Form to add a record to the table  --}}
+<div class="form-container">
+<p>To add a new teacher, please enter their information below and click Submit!</p>
+<form id="add-teacher-form-ajax">
+    <label for="input-firstName">First Name: </label>
+    <input type="text" name="input-firstName" id="input-firstName">
+
+    <label for="input-lastName">Last Name: </label>
+    <input type="text" name="input-lastName" id="input-lastName">
+
+    <label for="input-email">Email: </label>
+    <input type="text" name="input-email" id="input-email">
+
+    <label for="input-phoneNumber">phoneNumber </label>
+    <input type="text" name="input-phoneNumber" id="input-phoneNumber">
+
+    <input type="submit">
+</form>
+<!-- Update Teacher form -->
+        <form id="update-teacher-form-ajax">
+            <h3>Update Teacher</h3>
+            <input type="hidden" name="update-teacher-id" id="update-teacher-id">
+            <label for="update-firstName">First Name:</label>
+            <input type="text" name="update-firstName" id="update-firstName">
+
+            <label for="update-lastName">Last Name:</label>
+            <input type="text" name="update-lastName" id="update-lastName">
+
+            <label for="update-email">Email:</label>
+            <input type="text" name="update-email" id="update-email">
+
+            <label for="update-phoneNumber">Phone Number </label>
+            <input type="text" name="update-phoneNumber" id="update-phoneNumber">
+           <!-- Update button -->
+            <input type="submit">
+    </form>
+</div>
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/teachers/add_teacher.js"></script>
+<script src="./js/teachers/delete_teacher.js"></script>
+<script src="./js/teachers/update_teacher.js"></script>
