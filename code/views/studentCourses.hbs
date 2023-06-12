@@ -5,7 +5,8 @@
 <!-- index.hbs -->
 
 {{!-- Create a table --}}
-<h2>StudentCourses</h1>
+<div class="table-container">
+<h2>StudentCourses</h2>
 <p>StudentCourses Information</p>
 <br>
 <table id="studentCourses-table">
@@ -32,12 +33,98 @@
         <tr>
             <td>{{this.idStudent}}</td>
             <td>{{this.idCourse}}</td>
+             <td>
+                <button onclick="deleteStudentCourse('{{this.idStudent}}', '{{this.idCourse}}')">Delete</button>
+            </td>
+            <td>
+                <button onclick="expandUpdateForm('{{this.idStudent}}', '{{this.idCourse}}')">Update</button>
+            </td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+</div>
+{{!-- Form to add a record to the table  --}}
+<div class="form-container">
+<p>To add a new student to a course, please enter their information below and click Submit!</p>
+<form id="add-studentToCourse-form-ajax">
 
-<!-- /views/index.hbs -->
+    <label for="input-idStudent">Student ID: </label>
+    <select name="input-idStudent" id="input-idStudent">
+    <option>Select Student ID</option>
+    </select>
 
+    <label for="input-idCourse">Course ID: </label>
+    <select name="input-idCourse" id="input-idCourse">
+    <option>Select course ID</option>
+    </select>
 
+    <input type="submit">
+</form>
 
+<p>To update a new student to another course, please enter their information below and click Submit!</p>
+<form id="update-studentCourse-form-ajax">
+
+    <label for="update-idStudent">Student ID: </label>
+    <select name="update-idStudent" id="update-idStudent" disabled>
+    <option>Select Student ID</option>
+    </select>
+
+    <label for="update-idCourse">Course ID: </label>
+   <select name="update-idCourse" id="update-idCourse">
+        <option>Select course ID</option>
+    </select>
+
+    <input type="submit">
+</form>
+</div>
+    <script>
+        // Fetch Student data from the API
+fetch('api/students')
+  .then(response => response.json())
+  .then(data => {
+    // Get the select element
+    const selectStudent = document.getElementById('update-idStudent');
+    const selectStudent2 = document.getElementById('input-idStudent');
+    console.log(data)
+    // Loop through the Student' data and create an option for each Student
+    data.forEach(student => {
+      const option = document.createElement('option');
+      option.value = student.idStudent;
+      option.textContent = `${student.idStudent}`;
+      selectStudent.appendChild(option);
+
+      const option2 = document.createElement('option');
+      option2.value = student.idStudent;
+      option2.textContent = `${student.idStudent}`;
+      selectStudent2.appendChild(option2);
+    });
+  })
+  .catch(error => console.log(error));
+
+  fetch('api/courses')
+  .then(response => response.json())
+  .then(data => {
+    // Get the select element
+    const selectCourse = document.getElementById('update-idCourse');
+    const selectCourse2 = document.getElementById('input-idCourse');
+    console.log(data)
+    // Loop through the Student' data and create an option for each Student
+    data.forEach(course => {
+      const option = document.createElement('option');
+      option.value = course.idCourse;
+      option.textContent = `${course.idCourse}`;
+      selectCourse.appendChild(option);
+
+      const option2 = document.createElement('option');
+      option2.value = course.idCourse;
+      option2.textContent = `${course.idCourse}`;
+      selectCourse2.appendChild(option2);
+    });
+      })
+  .catch(error => console.log(error));
+    </script>
+
+<script src="./js/studentCourses/add_studentCourse.js"></script>
+<script src="./js/studentCourses/delete_studentCourse.js"></script>
+<script src="./js/studentCourses/update_studentCourse.js"></script>

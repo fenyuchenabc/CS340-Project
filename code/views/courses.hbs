@@ -40,8 +40,7 @@
             <td>{{this.idTeacher}}</td>
             <td>
                 <button onclick="deleteCourse({{this.idCourses}})">Delete</button>
-                <button onclick="expandUpdateForm('{{this.idCourse}}', '{{this.courseCode}}', '{{this.startTime}}', '{{this.endTime}}', '{{this.daysOfWeek}}', '{{this.idClassroom}}', '{{this.idTeacher}}')">Update</button> <!-- Add an "Update" button and pass the row data as arguments --></td>
-
+                <button onclick="expandUpdateForm('{{this.idCourse}}', '{{this.courseCode}}', '{{this.startTime}}', '{{this.endTime}}', '{{this.daysOfWeek}}', '{{this.idClassroom}}', '{{this.idTeacher}}')">Update</button>
             </td>
             
         </tr>
@@ -154,7 +153,7 @@ fetch('api/teachers')
     });
   })
   .catch(error => console.log(error));
-    </script>
+</script>
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/courses/add_course.js"></script>

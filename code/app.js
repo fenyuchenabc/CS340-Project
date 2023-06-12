@@ -45,7 +45,21 @@ app.get('/students', function(req, res)
 
             res.render('students', {data: rows});                  // Render the index.hbs file, and also send the renderer
         })                                                      // an object where 'data' is equal to the 'rows' we
-    });                                                         // received back from the query
+    });     
+                                                        // received back from the query
+ //for dropdowns
+ app.get('/api/students', function(req, res) {
+    let query = "SELECT * FROM Students";
+
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(500);
+        } else {
+            res.json(rows);
+        }
+    });
+});   
 
 app.get('/teachers', function(req, res)
     {
@@ -78,7 +92,21 @@ app.get('/courses', function(req, res)
             
             res.render('courses', {data: rows});                  // Render the index.hbs file, and also send the renderer
         })                                                      // an object where 'data' is equal to the 'rows' we
-    });                                                         // received back from the query
+    });          
+                                                   // received back from the query
+//For dropdowns
+    app.get('/api/courses', function(req, res) {
+        let query = "SELECT * FROM Courses";
+    
+        db.pool.query(query, function(error, rows, fields) {
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+            } else {
+                res.json(rows);
+            }
+        });
+    }); 
 
 app.get('/classrooms', function(req, res)
     {
@@ -369,6 +397,8 @@ app.post('/add-course-ajax', function(req, res)
     })
 });
 
+
+
 app.put('/update-course-ajax', function(req, res, next) {
     let data = req.body;
 
@@ -542,6 +572,94 @@ app.delete('/delete-classroom-ajax/', function(req,res,next){
       }
       );
   });
+
+
+  //add-studentCourse-ajax
+app.post('/add-studentCourse-ajax', function(req, res)
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    // Create the query and run it on the database
+    query1 = `INSERT INTO StudentCourses (idStudent, idCourse) VALUES ('${data.idStudent}', '${data.idCourse}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            // If there was no error, perform a SELECT * on bsg_people
+            query2 = `SELECT * FROM StudentCourses;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+///update-studentCourse-ajax
+app.put('/update-studentCourse-ajax', function(req, res, next) {
+    let data = req.body;
+
+    let idStudent = data.idStudent;
+    let idCourse = data.idCourse;
+
+    let queryUpdateStudentCourse = 'UPDATE StudentCourses SET idCourse = ? WHERE idStudent = ?';
+
+    // Run the update query
+    db.pool.query(queryUpdateStudentCourse, [idCourse, idStudent], function(error, result) {
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(200);
+        }
+    });
+});
+
+
+
+//delete-studentCourse-ajax
+app.delete('/delete-studentCourse-ajax/', function(req,res,next){
+    let data = req.body;
+    let idStudent = parseInt(data.idStudent);
+    let idCourse = parseInt(data.idCourse);
+    let deleteStudentCourses= `DELETE FROM StudentCourses WHERE idStudent = ${idStudent} AND  idCourse = '${idCourse}'`;
+    console.log(deleteStudentCourses) 
+          db.pool.query(deleteStudentCourses, [idStudent, idCourse], function(error, rows, fields){
+              if (error) {
+  
+              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+              console.log(error);
+              res.sendStatus(400);
+              }
+  
+              else
+              {
+                 res.sendStatus(204);
+              }
+        }
+        );
+    });
+  
+
 
     /*
     LISTENER
