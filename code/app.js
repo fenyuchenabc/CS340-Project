@@ -152,6 +152,7 @@ app.post('/add-student-ajax', function(req, res)
     // Create the query and run it on the database
     query1 = `INSERT INTO Students (firstName, lastName, email, dateOfBirth, year) VALUES ('${data.firstName}', '${data.lastName}', '${data.email}', '${data.dateOfBirth}', '${data.year}')`;
     db.pool.query(query1, function(error, rows, fields){
+        console.log(query1)
 
         // Check to see if there was an error
         if (error) {

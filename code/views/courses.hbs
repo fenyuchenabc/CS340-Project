@@ -39,7 +39,9 @@
             <td>{{this.idClassroom}}</td>
             <td>{{this.idTeacher}}</td>
             <td>
-                <button onclick="deleteCourse({{this.idCourses}})">Delete</button>
+                <button onclick="deleteCourse({{this.idCourse}})">Delete</button>
+                </td>
+                <td>
                 <button onclick="expandUpdateForm('{{this.idCourse}}', '{{this.courseCode}}', '{{this.startTime}}', '{{this.endTime}}', '{{this.daysOfWeek}}', '{{this.idClassroom}}', '{{this.idTeacher}}')">Update</button>
             </td>
             

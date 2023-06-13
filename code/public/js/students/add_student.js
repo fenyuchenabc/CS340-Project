@@ -4,12 +4,23 @@
   Adapted from: add_person.js
   Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main
 */
+
+function formatDate(data) {
+    const date = new Date(data);
+    
+     // Format the date as mm-dd-yyyy without time
+  const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
+  const formattedDate = date.toLocaleDateString(undefined, options);
+  
+    // Update the input value with the formatted date
+    console.log(`${formattedDate}`)
+    return `${formattedDate}`;
+  }
 // Get the objects we need to modify
 let addStudentForm = document.getElementById('add-student-form-ajax');
 
 // Modify the objects we need
 addStudentForm.addEventListener("submit", function (e) {
-
     // Prevent the form from submitting
     e.preventDefault();
 
@@ -94,7 +105,7 @@ addRowToTable = (data) => {
     firstNameCell.innerText = newRow.firstName;
     lastNameCell.innerText = newRow.lastName;
     emailCell.innerText = newRow.email;
-    dateOfBirthCell.innerText = newRow.dateOfBirth;
+    dateOfBirthCell.innerText = formatDate(newRow.dateOfBirth);
     yearCell.innerText = newRow.year;
 
     deleteCell = document.createElement("button");

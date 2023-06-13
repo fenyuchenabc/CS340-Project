@@ -9,6 +9,7 @@ function deleteCourse(idCourse) {
   let data = {
     idCourse: idCourse
   };
+  console.log(`Delete course ${data}`)
 
   // Setup our AJAX request
   var xhttp = new XMLHttpRequest();

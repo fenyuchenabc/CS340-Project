@@ -41,7 +41,10 @@
             <td>{{this.year}}</td>
             <td>
                 <button onclick="deleteStudent({{this.idStudent}})">Delete</button>
-                <button onclick="expandUpdateForm('{{this.idStudent}}', '{{this.firstName}}', '{{this.lastName}}', '{{this.email}}', '{{this.dateOfBirth}}', '{{this.year}}')">Update</button> <!-- Add an "Update" button and pass the row data as arguments --></td>
+                </td>
+                <td>
+                <button onclick="expandUpdateForm('{{this.idStudent}}', '{{this.firstName}}', '{{this.lastName}}', '{{this.email}}', '{{this.dateOfBirth}}', '{{this.year}}')">Update</button> <!-- Add an "Update" button and pass the row data as arguments -->
+                </td>
         </tr>
         {{/each}}
     </tbody>
