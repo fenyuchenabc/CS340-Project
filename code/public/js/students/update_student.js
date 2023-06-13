@@ -62,7 +62,7 @@ updateStudentForm.addEventListener("submit", function (e) {
             updateLastName.value = '';
             updateEmail.value = '';
             updateDateOfBirth.value = '';
-            updateYear.value = '';
+            updateYear.selectedIndex = 0;
 
             console.log("update student success")
         }

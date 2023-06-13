@@ -65,10 +65,16 @@
     <input type="text" name="input-email" id="input-email">
 
     <label for="input-dateOfBirth">dateOfBirth: </label>
-    <input type="text" name="input-dateOfBirth" id="input-dateOfBirth">
+    <input type="date" name="input-dateOfBirth" id="input-dateOfBirth">
 
     <label for="input-year">year: </label>
-    <input type="text" name="input-year" id="input-year">
+    <select name="input-year" id="input-year">
+                <option>Select year</option>
+                <option value="Freshman">Freshman</option>
+                <option value="Sophomore">Sophomore</option>
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+            </select>
 
     <input type="submit">
 </form>
@@ -87,10 +93,16 @@
             <input type="text" name="update-email" id="update-email">
 
             <label for="update-dateOfBirth">Date of Birth:</label>
-            <input type="text" name="update-dateOfBirth" id="update-dateOfBirth">
+            <input type="date" name="update-dateOfBirth" id="update-dateOfBirth">
 
             <label for="update-year">Year:</label>
-            <input type="text" name="update-year" id="update-year">
+            <select name="update-year" id="update-year">
+                                <option>Select year</option>
+                <option value="Freshman">Freshman</option>
+                <option value="Sophomore">Sophomore</option>
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+            </select>
 
            <!-- Update button -->
     <input type="submit">
